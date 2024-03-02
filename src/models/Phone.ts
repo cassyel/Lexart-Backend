@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../config/database';
+import sequelize from '../config/database';
 
 class Phone extends Model {
   public id!: number;
@@ -26,7 +26,7 @@ Phone.init(
   {
     sequelize: sequelize,
     modelName: 'Phone',
-    tableName: 'Phone', // Defina o nome da tabela aqui
+    tableName: 'Phone',
     createdAt: false,
     updatedAt: false
   }
