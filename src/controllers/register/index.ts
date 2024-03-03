@@ -8,9 +8,7 @@ export class RegisterController {
   async register(req: Request, res: Response) {
     const newUserData:RegisterDto = req.body;
 
-    const { success, code } = await this.registerService
-      .registerService(newUserData);
-
-    return res.status(code).json({ success });
+    const { code, ...responseData } = await this.registerService.registerService(newUserData);
+    return res.status(code).json(responseData);
   }
 }

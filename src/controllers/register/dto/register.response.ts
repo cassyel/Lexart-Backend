@@ -7,4 +7,7 @@ export class RegisterResponse{
 
   @Expose()
     code!: number;
+
+  @Expose()
+    errorMessage: string | undefined = undefined;
 }
