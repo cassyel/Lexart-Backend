@@ -1,12 +1,23 @@
-import { Request, Response, Router } from 'express';
+import { Router, Request, Response } from 'express';
+import { RegisterController } from '../controllers/register';
 
+class MyRouter {
+  private router: Router = Router();
+  private registerController = new RegisterController();
 
-const router = Router();
+  constructor() {
+    this.setupRoutes();
+  }
 
-// List Categories
-router.get('/categories', (_req: Request, res: Response) => {
-  return res.status(200);
-});
+  private setupRoutes() {
+    this.router.post('/register', (req: Request, res: Response) => this.registerController.register(req, res));
+    // Adicione mais rotas conforme necessário
+  }
 
+  getRouter(): Router {
+    return this.router;
+  }
+}
 
-export default router;
+const myRouter = new MyRouter();
+export default myRouter.getRouter();

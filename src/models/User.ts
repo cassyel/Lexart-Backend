@@ -1,7 +1,23 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
+import { randomUUID } from 'crypto';
 
-class User extends Model {}
+interface UserAttributes {
+  id: string;
+  email: string;
+  password: string;
+}
+
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+
+class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+  public id!: string;
+  public email!: string;
+  public password!: string;
+
+  public readonly createdAt: Date = new Date();
+  public readonly updatedAt: Date = new Date();
+}
 
 User.init(
   {
@@ -9,6 +25,7 @@ User.init(
       type: DataTypes.UUID,
       primaryKey: true,
       unique: true,
+      defaultValue: randomUUID()
     },
     email: {
       type: DataTypes.STRING,
@@ -24,8 +41,8 @@ User.init(
     sequelize,
     modelName: 'User',
     tableName: 'User',
-    createdAt: false,
-    updatedAt: false
+    createdAt: true,
+    updatedAt: true,
   }
 );
 

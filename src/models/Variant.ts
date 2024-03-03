@@ -1,16 +1,32 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, ModelStatic, Optional } from 'sequelize';
 import sequelize from '../config/database';
 import Phone from './Phone';
+import { randomUUID } from 'crypto';
 
-class Variant extends Model {
-  public id!: number;
-  public phoneId!: number; // Chave estrangeira referenciando Phone.id
+interface VariantAttributes {
+  id: string;
+  phoneId: number;
+  price: number;
+  color: string;
+}
+
+interface VariantCreationAttributes extends Optional<VariantAttributes, 'id'> {}
+
+class Variant extends Model<VariantAttributes, VariantCreationAttributes> implements VariantAttributes {
+  public id!: string;
+  public phoneId!: number;
   public price!: number;
   public color!: string;
 }
 
 Variant.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      unique: true,
+      defaultValue: randomUUID()
+    },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -19,17 +35,24 @@ Variant.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    phoneId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
   },
   {
-    sequelize: sequelize,
+    sequelize,
     modelName: 'Variant',
     tableName: 'Variant',
     createdAt: false,
-    updatedAt: false
+    updatedAt: false,
   }
 );
 
-// Adicionando a associação de muitos-para-um (Variant belongsTo Phone)
-Variant.belongsTo(Phone, { as: 'phone', foreignKey: 'phoneId' });
+
+const PhoneModel: ModelStatic<Phone> = Phone as ModelStatic<Phone>;
+Variant.belongsTo(PhoneModel, { as: 'phone', foreignKey: 'phoneId' });
+
+Variant.sync({ force: true });
 
 export default Variant;

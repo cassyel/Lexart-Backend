@@ -1,15 +1,34 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
+import { randomUUID } from 'crypto';
 
-class Phone extends Model {
-  public id!: number;
+interface PhoneAttributes {
+  id: string;
+  name: string;
+  brand: string;
+  model: string;
+}
+
+interface PhoneCreationAttributes extends Optional<PhoneAttributes, 'id'> {}
+
+class Phone extends Model<PhoneAttributes, PhoneCreationAttributes> implements PhoneAttributes {
+  public id!: string;
   public name!: string;
   public brand!: string;
   public model!: string;
+
+  public readonly createdAt: Date = new Date();
+  public readonly updatedAt: Date = new Date();
 }
 
 Phone.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      unique: true,
+      defaultValue: randomUUID()
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -27,9 +46,11 @@ Phone.init(
     sequelize: sequelize,
     modelName: 'Phone',
     tableName: 'Phone',
-    createdAt: false,
-    updatedAt: false
+    createdAt: true,
+    updatedAt: true
   }
 );
+
+Phone.sync({ force: true });
 
 export default Phone;
