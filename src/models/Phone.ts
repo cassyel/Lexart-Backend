@@ -27,7 +27,7 @@ Phone.init(
       type: DataTypes.UUID,
       primaryKey: true,
       unique: true,
-      defaultValue: randomUUID()
+      defaultValue: () => randomUUID(), // Use uma função para gerar um novo UUID
     },
     name: {
       type: DataTypes.STRING,
@@ -51,6 +51,7 @@ Phone.init(
   }
 );
 
-Phone.sync({ force: true });
+Phone.sync();
+// Phone.sync({ force: true });
 
 export default Phone;

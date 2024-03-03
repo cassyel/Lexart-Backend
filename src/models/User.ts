@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
 import { randomUUID } from 'crypto';
+import bcrypt from 'bcrypt';
 
 interface UserAttributes {
   id: string;
@@ -15,8 +16,12 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public email!: string;
   public password!: string;
 
-  public readonly createdAt: Date = new Date();
-  public readonly updatedAt: Date = new Date();
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  async comparePassword(userPassword: string): Promise<boolean> {
+    return bcrypt.compare(userPassword, this.password);
+  }
 }
 
 User.init(
@@ -24,8 +29,7 @@ User.init(
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
-      unique: true,
-      defaultValue: randomUUID()
+      defaultValue: () => randomUUID(), // Use uma função para gerar um novo UUID
     },
     email: {
       type: DataTypes.STRING,
@@ -41,11 +45,12 @@ User.init(
     sequelize,
     modelName: 'User',
     tableName: 'User',
-    createdAt: true,
-    updatedAt: true,
+    createdAt: 'createdAt', // Corrija o tipo para corresponder à definição do modelo
+    updatedAt: 'updatedAt', // Corrija o tipo para corresponder à definição do modelo
   }
 );
 
-User.sync({ force: true });
+User.sync();
+// User.sync({ force: true });
 
 export default User;

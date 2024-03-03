@@ -25,7 +25,7 @@ Variant.init(
       type: DataTypes.UUID,
       primaryKey: true,
       unique: true,
-      defaultValue: randomUUID()
+      defaultValue: () => randomUUID(), // Use uma função para gerar um novo UUID
     },
     price: {
       type: DataTypes.INTEGER,
@@ -53,6 +53,7 @@ Variant.init(
 const PhoneModel: ModelStatic<Phone> = Phone as ModelStatic<Phone>;
 Variant.belongsTo(PhoneModel, { as: 'phone', foreignKey: 'phoneId' });
 
-Variant.sync({ force: true });
+Variant.sync();
+// Variant.sync({ force: true });
 
 export default Variant;
