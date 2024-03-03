@@ -1,5 +1,9 @@
 import { Response, Request } from 'express';
 
-export function serverError(err: Error, _req: Request, res: Response) {
-  res.status(500).json({ error: err.message });
+class ErrorHandler {
+  public static handleServerError(err: Error, req: Request, res: Response): void {
+    res.status(500).json({ error: err.message });
+  }
 }
+
+export default ErrorHandler;

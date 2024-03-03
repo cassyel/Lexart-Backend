@@ -1,7 +1,7 @@
 import express, { Express } from 'express';
 import sequelize from './config/database';
 import cors from 'cors';
-import { serverError } from './middlewares/errorHandling';
+import ErrorHandler from './middlewares/errorHandling';
 import router from './routes/router';
 
 class App {
@@ -20,9 +20,9 @@ class App {
       console.log('Conexão efetuada');
 
       this.expressApp.use(express.json());
-      this.expressApp.use(router);
       this.expressApp.use(cors());
-      this.expressApp.use(serverError);
+      this.expressApp.use(router);
+      this.expressApp.use(ErrorHandler.handleServerError);
 
       this.startServer();
     } catch (error) {

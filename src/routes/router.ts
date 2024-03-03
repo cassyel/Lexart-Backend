@@ -1,9 +1,12 @@
 import { Router, Request, Response } from 'express';
 import { RegisterController } from '../controllers/register';
+import AuthMiddleware from '../middlewares/authMiddleware';
 
 class MyRouter {
   private router: Router = Router();
   private registerController = new RegisterController();
+  private authMiddleware = new AuthMiddleware();
+
 
   constructor() {
     this.setupRoutes();
@@ -11,7 +14,10 @@ class MyRouter {
 
   private setupRoutes() {
     this.router.post('/register', (req: Request, res: Response) => this.registerController.register(req, res));
-    // Adicione mais rotas conforme necessário
+    this.router.get('/login', (req: Request, res: Response) => this.registerController.register(req, res));
+
+    // Adiciona verificação JWT para as rotas abaixo
+    this.router.use(this.authMiddleware.getMiddleware());
   }
 
   getRouter(): Router {
