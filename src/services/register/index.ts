@@ -11,7 +11,7 @@ export class RegisterService {
       // Verifica se o email já está em uso
       const existingUser = await User.findOne({ where:{ email: newUser.email } });
       if (existingUser) {
-        response.code = 400;
+        response.code = 409;
         response.success = false;
         response.errorMessage = 'Email já registrado. Por favor, escolha outro.';
       } else {
@@ -35,6 +35,6 @@ export class RegisterService {
       response.errorMessage = 'Erro interno do servidor';
     }
 
-    return { success: response.success, code: response.code, errorMessage: response.errorMessage };
+    return response;
   }
 }

@@ -41,9 +41,6 @@ class App {
   }
 }
 
-if (require.main === module) {
-  // Se este arquivo for o módulo principal, execute a aplicação
-  new App(); // Não é mais necessário chamar startServer aqui
-}
+// Se este arquivo for o módulo principal, execute a aplicação
+require.main === module && new App();
 
-export default App;

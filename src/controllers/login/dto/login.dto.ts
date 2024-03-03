@@ -1,8 +1,8 @@
+import { Expose, Exclude } from 'class-transformer';
 import Joi from '@hapi/joi';
-import { Exclude, Expose } from 'class-transformer';
 
 @Exclude()
-export class RegisterDto {
+export class LoginDto {
   @Expose()
     email!: string;
 
@@ -10,7 +10,7 @@ export class RegisterDto {
     password!: string;
 }
 
-export const registerJoiSchema: Joi.ObjectSchema<RegisterDto> = Joi.object({
+export const loginJoiSchema: Joi.ObjectSchema<LoginDto> = Joi.object({
   email: Joi
     .string()
     .email()
@@ -27,3 +27,4 @@ export const registerJoiSchema: Joi.ObjectSchema<RegisterDto> = Joi.object({
   'any.required': '{{#label}} é obrigatório',
   'string.empty': '{{#label}} não pode ser vazio'
 });
+

@@ -1,9 +1,12 @@
 import { Expose, Exclude } from 'class-transformer';
 
 @Exclude()
-export class RegisterResponse {
+export class LoginResponse {
   @Expose()
     success!: boolean;
+
+  @Expose()
+    token: string | undefined = undefined;
 
   @Expose()
     code!: number;

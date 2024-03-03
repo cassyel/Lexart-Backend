@@ -17,7 +17,7 @@ class AuthMiddleware {
     const token = req.header('Authorization');
 
     if (!token) {
-      return res.status(401).json({ success: false, message: 'Token não fornecido' });
+      return res.status(401).json({ success: false, errorMessage: 'Token não fornecido' });
     }
 
     try {
@@ -26,7 +26,7 @@ class AuthMiddleware {
       next();
     } catch (error) {
       console.error(error);
-      res.status(401).json({ success: false, message: 'Token inválido' });
+      res.status(401).json({ success: false, errorMessage: 'Token inválido' });
     }
   }
 
