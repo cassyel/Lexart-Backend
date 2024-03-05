@@ -10,37 +10,40 @@ class App {
 
   constructor() {
     this.expressApp = express();
-    this.setup();
   }
 
-  private async setup() {
+  public async setup() {
     try {
-      await sequelize.authenticate(); // Verifica a autenticação do banco de dados
-
+      await sequelize.authenticate();
       await sequelize.sync();
-
       console.log('Conexão efetuada');
 
       this.expressApp.use(express.json());
       this.expressApp.use(cors());
       this.expressApp.use(router);
       this.expressApp.use(ErrorHandler.handleServerError);
-
-      this.startServer();
     } catch (error) {
       console.error('Erro ao conectar com o banco de dados:', error);
-      sequelize.close(); // Fecha a conexão com o banco de dados em caso de erro
+      sequelize.close();
     }
   }
 
-  private startServer() {
-    const port = env.PORT;
+  public startServer() {
+    const port = env.PORT || 3000;
     this.expressApp.listen(port, () => console.log(`Server running on port ${port}`));
   }
 
-  getExpressApp(): Express {
+  public getExpressApp(): Express {
     return this.expressApp;
   }
 }
 
-export default new App();
+// Exporta a função que cria e inicializa o servidor
+export default async function createServer(): Promise<Express> {
+  const app = new App();
+  await app.setup();
+  app.startServer();
+  return app.getExpressApp();
+}
+
+createServer();
