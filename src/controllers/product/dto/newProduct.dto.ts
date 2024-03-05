@@ -2,13 +2,13 @@ import { Exclude, Expose } from 'class-transformer';
 @Exclude()
 export class Details {
   @Expose()
-    brand!: string;
+    brand: string;
 
   @Expose()
-    model!: string;
+    model: string;
 
   @Expose()
-    color!: string;
+    color: string;
 
   constructor(brand: string, model: string, color: string) {
     this.brand = brand;
@@ -21,19 +21,19 @@ export class Details {
 @Exclude()
 export class ProductDTO1 {
   @Expose()
-    name!: string;
+    name: string;
 
   @Expose()
-    brand!: string;
+    brand: string;
 
   @Expose()
-    model!: string;
+    model: string;
 
   @Expose()
-    price!: number;
+    price: number;
 
   @Expose()
-    color!: string;
+    color: string;
 
   constructor(name: string, brand: string, model: string, price: number, color: string) {
     this.name = name;
@@ -48,13 +48,13 @@ export class ProductDTO1 {
 @Exclude()
 export class ProductDTO2 {
   @Expose()
-    name!: string;
+    name: string;
 
   @Expose()
-    details!: Details;
+    details: Details;
 
   @Expose()
-    price!: number;
+    price: number;
 
   constructor(name: string, details: Details, price: number) {
     this.name = name;
@@ -66,10 +66,10 @@ export class ProductDTO2 {
 // Estrutura 3 DTO
 export class ProductData {
   @Expose()
-    price!: number;
+    price: number;
 
   @Expose()
-    color!: string;
+    color: string;
 
   constructor(price: number, color: string) {
     this.price = price;
@@ -80,21 +80,38 @@ export class ProductData {
 @Exclude()
 export class ProductDTO3 {
   @Expose()
-    name!: string;
+    name: string;
 
   @Expose()
-    brand!: string;
+    brand: string;
 
   @Expose()
-    model!: string;
+    model: string;
 
   @Expose()
-    data!: ProductData[];
+    data: ProductData[];
 
   constructor(name: string, brand: string, model: string, data: ProductData[]) {
     this.name = name;
     this.brand = brand;
     this.model = model;
     this.data = data;
+  }
+}
+
+export class VariantDTO {
+  @Expose()
+    color: string;
+
+  @Expose()
+    price: number;
+
+  @Expose()
+    phoneId: string;
+
+  constructor(color: string, price: number, phoneId: string) {
+    this.color = color;
+    this.price = price;
+    this.phoneId = phoneId;
   }
 }

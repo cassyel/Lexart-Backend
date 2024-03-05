@@ -1,7 +1,8 @@
-import { ProductDTO1, ProductDTO2, ProductDTO3 } from '../../../controllers/product/create/dto/newProduct.dto';
-import { NewProductResponse } from '../../../controllers/product/create/dto/newProduct.response';
-import Phone from '../../../models/Phone';
-import Variant from '../../../models/Variant';
+import { ProductDTO1, ProductDTO2, ProductDTO3, VariantDTO } from '../../controllers/product/dto/newProduct.dto';
+import { NewProductResponse } from '../../controllers/product/dto/newProduct.response';
+import { NewVariantResponse } from '../../controllers/product/dto/newVariant.response';
+import Phone from '../../models/Phone';
+import Variant from '../../models/Variant';
 
 export class ProductService {
   private async createProductDTO1(productData: ProductDTO1) {
@@ -68,6 +69,33 @@ export class ProductService {
       response.code = 400;
       response.success = false;
       response.errorMessage = 'Erro ao criar um novo produto';
+    }
+
+    return response;
+  }
+
+  async createVariant(variantDate: VariantDTO) {
+    const { color, phoneId, price } = variantDate;
+    const response = new NewVariantResponse();
+
+    try {
+      const phone = await Phone.findOne({ where: { id: phoneId } });
+
+      if (phone) {
+        await Variant.create({ color, price, phoneId: phone.id });
+        response.code = 201;
+        response.success = true;
+      } else {
+        response.code = 400;
+        response.success = false;
+        response.errorMessage = 'Produto não encontrado';
+      }
+    } catch (error) {
+      console.error(error);
+
+      response.code = 400;
+      response.success = false;
+      response.errorMessage = 'Erro ao criar variante';
     }
 
     return response;

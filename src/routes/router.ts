@@ -2,7 +2,7 @@ import { LoginController } from './../controllers/login/index';
 import { Router, Request, Response } from 'express';
 import { RegisterController } from '../controllers/register';
 import AuthMiddleware from '../middlewares/authMiddleware';
-import { ProductController } from '../controllers/product/create';
+import { ProductController } from '../controllers/product';
 
 class MyRouter {
   private router: Router = Router();
@@ -24,6 +24,7 @@ class MyRouter {
     this.router.use(this.authMiddleware.getMiddleware());
 
     this.router.post('/product', (req: Request, res: Response) => this.productController.createProduct(req, res));
+    this.router.post('/product/variant', (req: Request, res: Response) => this.productController.createVariant(req, res));
   }
 
   getRouter(): Router {

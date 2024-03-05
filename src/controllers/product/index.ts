@@ -1,10 +1,11 @@
-import { Details, ProductDTO1, ProductDTO2, ProductDTO3 } from './dto/newProduct.dto';
+import { Details, ProductDTO1, ProductDTO2, ProductDTO3, VariantDTO } from './dto/newProduct.dto';
 import { Request, Response } from 'express';
-import { ProductService } from '../../../services/product/create';
-import { productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema } from './joi';
+import { ProductService } from '../../services/product';
+import { productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema, variantDTOJoiSchema } from './joi';
 import Joi from 'joi';
 
 type optionsDTO = ProductDTO1 | ProductDTO2 | ProductDTO3[]
+
 
 export class ProductController {
   private productService = new ProductService();
@@ -12,7 +13,7 @@ export class ProductController {
   private productDTO2JoiSchema: Joi.ObjectSchema = productDTO2JoiSchema;
   private productDTO3JoiSchema: Joi.ArraySchema = productDTO3JoiSchema;
 
-  private validateProduct(data: optionsDTO,schema: Joi.ObjectSchema | Joi.ArraySchema): Joi.ValidationResult {
+  private validateProduct(data: optionsDTO | VariantDTO ,schema: Joi.ObjectSchema | Joi.ArraySchema): Joi.ValidationResult {
     return schema.validate(data);
   }
 
@@ -42,6 +43,10 @@ export class ProductController {
         data.color
       );
     }
+  }
+
+  private createVariantInstance(data: VariantDTO) {
+    return new VariantDTO(data.color, data.price, data.phoneId);
   }
 
   public async createProduct(req: Request, res: Response) {
@@ -75,7 +80,18 @@ export class ProductController {
     }
   }
 
-  // public async createVariant(req: Request, res: Response) {
+  public async createVariant(req: Request, res: Response) {
+    const variantData: VariantDTO = req.body;
 
-  // }
+    const { error } = this.validateProduct(variantData, variantDTOJoiSchema);
+
+    if (error) {
+      return res.status(400).json({ errorMessage: error.details[0].message, success: false });
+    } else {
+      const variantInstance = this.createVariantInstance(variantData);
+      console.log(variantInstance);
+      const { code, ...responseData }= await this.productService.createVariant(variantInstance);
+      return res.status(code).json(responseData);
+    }
+  }
 }
