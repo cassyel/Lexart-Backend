@@ -191,7 +191,6 @@ export class ProductService {
     return response;
   }
 
-
   async updateVariant(variantData: VariantDTO) {
     const { price, id } = variantData;
     const response = new VariantResponse();
