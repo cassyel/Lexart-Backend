@@ -51,7 +51,7 @@ Variant.init(
 
 
 const PhoneModel: ModelStatic<Phone> = Phone as ModelStatic<Phone>;
-Variant.belongsTo(PhoneModel, { as: 'phone', foreignKey: 'phoneId' });
+Variant.belongsTo(PhoneModel, { as: 'phone', foreignKey: 'phoneId', onDelete: 'CASCADE' });
 
 Variant.sync();
 // Variant.sync({ force: true });

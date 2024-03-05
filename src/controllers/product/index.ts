@@ -1,7 +1,7 @@
 import { Details, ProductDTO1, ProductDTO2, ProductDTO3 } from './dto/newProduct.dto';
 import { Request, Response } from 'express';
 import { ProductService } from '../../services/product';
-import { productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema, variantDTOJoiSchema } from './joi';
+import { deleteProductDTOJoiSchema, deleteVariantDTOJoiSchema, productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema, variantDTOJoiSchema } from './joi';
 import { VariantDTO } from './dto/newVariant.dto';
 import Joi from 'joi';
 
@@ -47,7 +47,7 @@ export class ProductController {
   }
 
   private createVariantInstance(data: VariantDTO) {
-    return new VariantDTO(data.color, data.price, data.phoneId);
+    return new VariantDTO(data.color, data.price, data.phoneId, data.id);
   }
 
   public async createProduct(req: Request, res: Response) {
@@ -81,6 +81,21 @@ export class ProductController {
     }
   }
 
+  public async deleteProduct(req: Request, res: Response) {
+    const productVariant: ProductDTO1 = req.body;
+
+    const { error } = this.validateProduct(productVariant, deleteProductDTOJoiSchema);
+
+    if (error) {
+      return res.status(400).json({ errorMessage: error.details[0].message, success: false });
+    } else {
+      const variantInstance = this.createProductInstance(productVariant);
+      console.log(variantInstance);
+      const { code, ...responseData }= await this.productService.deleteProduct(productVariant);
+      return res.status(code).json(responseData);
+    }
+  }
+
   public async createVariant(req: Request, res: Response) {
     const variantData: VariantDTO = req.body;
 
@@ -92,6 +107,21 @@ export class ProductController {
       const variantInstance = this.createVariantInstance(variantData);
       console.log(variantInstance);
       const { code, ...responseData }= await this.productService.createVariant(variantInstance);
+      return res.status(code).json(responseData);
+    }
+  }
+
+  public async deleteVariant(req: Request, res: Response) {
+    const variantData: VariantDTO = req.body;
+
+    const { error } = this.validateProduct(variantData, deleteVariantDTOJoiSchema);
+
+    if (error) {
+      return res.status(400).json({ errorMessage: error.details[0].message, success: false });
+    } else {
+      const variantInstance = this.createVariantInstance(variantData);
+      console.log(variantInstance);
+      const { code, ...responseData }= await this.productService.deleteVariant(variantInstance);
       return res.status(code).json(responseData);
     }
   }

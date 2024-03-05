@@ -53,11 +53,23 @@ export const productDTO3JoiSchema: Joi.ArraySchema<ProductDTO3[]> = Joi.array().
   'any.required': 'O campo {{#label}} é obrigatório'
 });
 
+export const deleteProductDTOJoiSchema: Joi.ObjectSchema<Partial<ProductDTO1>> = Joi.object({
+  id: Joi.string().uuid().required()
+});
+
 
 export const variantDTOJoiSchema: Joi.ObjectSchema<VariantDTO> = Joi.object({
   price: Joi.number().required(),
   color: Joi.string().required(),
   phoneId: Joi.string().uuid().required(),
+}).messages({
+  'string.empty': '{{#label}} não pode ser vazio',
+  'number.base': '{{#label}} deve ser um número',
+  'any.required': 'O campo {{#label}} é obrigatório'
+});
+
+export const deleteVariantDTOJoiSchema: Joi.ObjectSchema<VariantDTO> = Joi.object({
+  id: Joi.string().uuid().required()
 }).messages({
   'string.empty': '{{#label}} não pode ser vazio',
   'number.base': '{{#label}} deve ser um número',

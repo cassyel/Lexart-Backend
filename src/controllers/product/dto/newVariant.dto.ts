@@ -13,9 +13,10 @@ export class VariantDTO {
   @Expose()
     phoneId: string;
 
-  constructor(color: string, price: number, phoneId: string) {
+  constructor(color: string, price: number, phoneId: string, id?: string) {
     this.color = color;
     this.price = price;
     this.phoneId = phoneId;
+    this.id = id;
   }
 }

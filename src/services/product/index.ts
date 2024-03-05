@@ -103,7 +103,7 @@ export class ProductService {
 
   }
 
-  async deleteProduct(productData: Partial<ProductDTO1>) {
+  async deleteProduct(productData: ProductDTO1) {
     const { id } = productData;
     const response = new VariantResponse();
 
@@ -163,17 +163,22 @@ export class ProductService {
     const response = new VariantResponse();
 
     try {
-      const phone = await Phone.findOne({ where: { id } });
+      const variant = await Variant.findOne({ where: { id } });
 
-      if (phone) {
+      if (variant) {
+        const variantCount = await Variant.count({ where: { phoneId: variant.phoneId } });
         await Variant.destroy({ where: { id } });
+
+        if (variantCount === 1) {
+          await Phone.destroy({ where: { id: variant.phoneId } });
+        }
 
         response.code = 200;
         response.success = true;
       } else {
         response.code = 404;
         response.success = false;
-        response.errorMessage = 'Produto não encontrado';
+        response.errorMessage = 'Variante não encontrada';
       }
     } catch (error) {
       console.error(error);
@@ -185,6 +190,7 @@ export class ProductService {
 
     return response;
   }
+
 
   async updateVariant(variantData: VariantDTO) {
     const { price, id, phoneId } = variantData;
