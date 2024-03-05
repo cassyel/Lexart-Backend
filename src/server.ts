@@ -3,6 +3,7 @@ import sequelize from './config/database';
 import cors from 'cors';
 import ErrorHandler from './middlewares/errorHandling';
 import router from './routes/router';
+import { env } from './env';
 
 class App {
   private expressApp: Express;
@@ -33,7 +34,7 @@ class App {
   }
 
   private startServer() {
-    const port = 3333;
+    const port = env.PORT;
     this.expressApp.listen(port, () => console.log(`Server running on port ${port}`));
   }
 

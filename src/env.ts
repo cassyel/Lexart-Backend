@@ -11,7 +11,8 @@ const envSchema = z.object({
   POSTGRES_HOST: z.string(),
   POSTGRES_DIALECT: z.string(),
   JWT_SECRET: z.string(),
-  EXTERNAL_SECRET: z.string()
+  EXTERNAL_SECRET: z.string(),
+  PORT: z.string()
 });
 
 export const env = envSchema.parse(process.env);
