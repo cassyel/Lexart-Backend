@@ -1,6 +1,5 @@
-import { DataTypes, Model, ModelStatic, Optional } from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
-import Phone from './Phone';
 import { randomUUID } from 'crypto';
 
 interface VariantAttributes {
@@ -25,7 +24,7 @@ Variant.init(
       type: DataTypes.UUID,
       primaryKey: true,
       unique: true,
-      defaultValue: () => randomUUID(), // Use uma função para gerar um novo UUID
+      defaultValue: () => randomUUID(),
     },
     price: {
       type: DataTypes.INTEGER,
@@ -48,10 +47,6 @@ Variant.init(
     updatedAt: false,
   }
 );
-
-
-const PhoneModel: ModelStatic<Phone> = Phone as ModelStatic<Phone>;
-Variant.belongsTo(PhoneModel, { as: 'phone', foreignKey: 'phoneId', onDelete: 'CASCADE' });
 
 Variant.sync();
 // Variant.sync({ force: true });

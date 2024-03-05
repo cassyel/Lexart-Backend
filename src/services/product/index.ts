@@ -1,3 +1,4 @@
+import { GetAllProductResponse } from '../../controllers/product/dto/getAllProducts.response';
 import { ProductDTO1, ProductDTO2, ProductDTO3 } from '../../controllers/product/dto/newProduct.dto';
 import { ProductResponse } from '../../controllers/product/dto/newProduct.response';
 import { VariantDTO } from '../../controllers/product/dto/newVariant.dto';
@@ -72,6 +73,34 @@ export class ProductService {
       response.errorMessage = 'Erro ao criar um novo produto';
     }
 
+    return response;
+  }
+
+  async findAllProducts() {
+    const response = new GetAllProductResponse();
+
+    try {
+      const products = await Phone.findAll({
+        attributes: {
+          exclude: ['createdAt', 'updatedAt'],
+        },
+        include: {
+          model: Variant,
+          as: 'variants',
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      });
+
+      response.data = products;
+      response.code = 201;
+      response.success = true;
+    } catch (error) {
+      response.code = 400;
+      response.success = false;
+      response.errorMessage = 'Erro ao buscar os produtos';
+    }
     return response;
   }
 

@@ -82,7 +82,7 @@ export class ProductController {
         return res.status(400).json({ errorMessage: error.details[0].message, success: false });
       } else {
         const productInstance = this.createProductInstance(productData);
-        const { code, ...responseData }= await this.productService.createProduct(productInstance);
+        const { code, ...responseData } = await this.productService.createProduct(productInstance);
         return res.status(code).json(responseData);
       }
 
@@ -90,6 +90,11 @@ export class ProductController {
       console.error(error);
       return res.status(500).json({ errorMessage: 'Erro interno ao processar a solicitação', success: false });
     }
+  }
+
+  public async findAllProducts(_req: Request, res: Response) {
+    const { code, ...responseData } = await this.productService.findAllProducts();
+    return res.status(code).json(responseData);
   }
 
   public async updateProduct(req: Request, res: Response) {

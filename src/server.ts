@@ -17,6 +17,7 @@ class App {
       await sequelize.authenticate(); // Verifica a autenticação do banco de dados
 
       await sequelize.sync();
+
       console.log('Conexão efetuada');
 
       this.expressApp.use(express.json());
@@ -43,4 +44,3 @@ class App {
 
 // Se este arquivo for o módulo principal, execute a aplicação
 require.main === module && new App();
-
