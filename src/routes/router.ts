@@ -21,6 +21,7 @@ class MyRouter {
 
   private setupRoutes() {
     // Rotas para se registrar e logar no frontend
+    this.router.get('/', (req: Request, res: Response) => res.send('Lexart Backend'));
     this.router.post('/register', (req: Request, res: Response) => this.registerController.register(req, res));
     this.router.post('/login', (req: Request, res: Response) => this.loginController.login(req, res));
 

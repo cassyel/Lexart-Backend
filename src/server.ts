@@ -3,7 +3,6 @@ import sequelize from './config/database';
 import cors from 'cors';
 import ErrorHandler from './middlewares/errorHandling';
 import router from './routes/router';
-import { env } from './env';
 
 class App {
   private expressApp: Express;
@@ -28,11 +27,6 @@ class App {
     }
   }
 
-  public startServer() {
-    const port = env.PORT || 3000;
-    this.expressApp.listen(port, () => console.log(`Server running on port ${port}`));
-  }
-
   public getExpressApp(): Express {
     return this.expressApp;
   }
@@ -42,8 +36,15 @@ class App {
 export default async function createServer(): Promise<Express> {
   const app = new App();
   await app.setup();
-  app.startServer();
   return app.getExpressApp();
 }
 
-createServer();
+// Se estiver executando como script principal, inicia o servidor
+// if (require.main === module) {
+//   const PORT = process.env.PORT || 3000;
+//   createServer().then((app) => {
+//     app.listen(PORT, () => {
+//       console.log(`Server running on port ${PORT}`);
+//     });
+//   });
+// }
