@@ -1,6 +1,7 @@
-import { Details, ProductDTO1, ProductDTO2, ProductDTO3, productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema } from './dto/newProduct.dto';
+import { Details, ProductDTO1, ProductDTO2, ProductDTO3 } from './dto/newProduct.dto';
 import { Request, Response } from 'express';
 import { ProductService } from '../../../services/product/create';
+import { productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema } from './joi';
 import Joi from 'joi';
 
 type optionsDTO = ProductDTO1 | ProductDTO2 | ProductDTO3[]
@@ -43,7 +44,7 @@ export class ProductController {
     }
   }
 
-  public async validateAndCreateProduct(req: Request, res: Response) {
+  public async createProduct(req: Request, res: Response) {
 
     try {
       const productData: optionsDTO = req.body;
@@ -73,4 +74,8 @@ export class ProductController {
       return res.status(500).json({ errorMessage: 'Erro interno ao processar a solicitação', success: false });
     }
   }
+
+  // public async createVariant(req: Request, res: Response) {
+
+  // }
 }

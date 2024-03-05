@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { LoginDto, loginJoiSchema } from './dto/login.dto';
+import { LoginDto } from './dto/login.dto';
 import { LoginService } from '../../services/login';
+import { loginJoiSchema } from './joi';
 
 export class LoginController {
   private loginService = new LoginService();

@@ -23,7 +23,7 @@ class MyRouter {
     // Adiciona verificação JWT para as rotas abaixo
     this.router.use(this.authMiddleware.getMiddleware());
 
-    this.router.post('/product', (req: Request, res: Response) => this.productController.validateAndCreateProduct(req, res));
+    this.router.post('/product', (req: Request, res: Response) => this.productController.createProduct(req, res));
   }
 
   getRouter(): Router {

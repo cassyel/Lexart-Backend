@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { RegisterService } from '../../services/register';
-import { RegisterDto, registerJoiSchema } from './dto/register.dto';
+import { RegisterDto } from './dto/register.dto';
+import { registerJoiSchema } from './joi';
 
 export class RegisterController {
   private registerService = new RegisterService();
