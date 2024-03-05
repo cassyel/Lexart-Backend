@@ -1,5 +1,6 @@
-import { ProductDTO1, ProductDTO2, ProductDTO3, VariantDTO } from '../../controllers/product/dto/newProduct.dto';
+import { ProductDTO1, ProductDTO2, ProductDTO3 } from '../../controllers/product/dto/newProduct.dto';
 import { ProductResponse } from '../../controllers/product/dto/newProduct.response';
+import { VariantDTO } from '../../controllers/product/dto/newVariant.dto';
 import { VariantResponse } from '../../controllers/product/dto/newVariant.response';
 import Phone from '../../models/Phone';
 import Variant from '../../models/Variant';

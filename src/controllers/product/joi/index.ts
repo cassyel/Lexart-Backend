@@ -1,5 +1,6 @@
 import Joi from 'joi';
-import { ProductDTO1, ProductDTO2, ProductDTO3, VariantDTO } from '../dto/newProduct.dto';
+import { ProductDTO1, ProductDTO2, ProductDTO3 } from '../dto/newProduct.dto';
+import { VariantDTO } from '../dto/newVariant.dto';
 
 const productDataSchema = Joi.object({
   price: Joi.number().required(),

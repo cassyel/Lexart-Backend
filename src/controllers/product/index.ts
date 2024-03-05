@@ -1,7 +1,8 @@
-import { Details, ProductDTO1, ProductDTO2, ProductDTO3, VariantDTO } from './dto/newProduct.dto';
+import { Details, ProductDTO1, ProductDTO2, ProductDTO3 } from './dto/newProduct.dto';
 import { Request, Response } from 'express';
 import { ProductService } from '../../services/product';
 import { productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema, variantDTOJoiSchema } from './joi';
+import { VariantDTO } from './dto/newVariant.dto';
 import Joi from 'joi';
 
 type optionsDTO = ProductDTO1 | ProductDTO2 | ProductDTO3[]

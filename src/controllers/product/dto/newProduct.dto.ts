@@ -101,23 +101,3 @@ export class ProductDTO3 {
     this.data = data;
   }
 }
-
-export class VariantDTO {
-  @Expose ()
-    id?: string;
-
-  @Expose()
-    color: string;
-
-  @Expose()
-    price: number;
-
-  @Expose()
-    phoneId: string;
-
-  constructor(color: string, price: number, phoneId: string) {
-    this.color = color;
-    this.price = price;
-    this.phoneId = phoneId;
-  }
-}
