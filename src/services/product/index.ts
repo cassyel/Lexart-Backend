@@ -104,6 +104,42 @@ export class ProductService {
     return response;
   }
 
+  async findProductById(id: string) {
+    const response = new GetAllProductResponse();
+
+    try {
+      const product = await Phone.findOne({
+        where: { id },
+        attributes: {
+          exclude: ['createdAt', 'updatedAt'],
+        },
+        include: {
+          model: Variant,
+          as: 'variants',
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      });
+
+      if (product) {
+        response.data = product;
+        response.code = 200;
+        response.success = true;
+      } else {
+        response.code = 404;
+        response.success = false;
+        response.errorMessage = `Nenhum produto com o id: ${id} foi encontrado`;
+      }
+    } catch (error) {
+      response.code = 400;
+      response.success = false;
+      response.errorMessage = `Erro ao buscar o produto com o id: ${id}`;
+    }
+    return response;
+
+  }
+
   async updateProduct(productData: Partial<ProductDTO1>) {
     const { name, model, brand, id } = productData;
     const response = new ProductResponse();

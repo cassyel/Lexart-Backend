@@ -30,6 +30,7 @@ class MyRouter {
     // Rotas para uso externo (adiciona middleware de validação)
     this.router.post('/external/product', this.externalAuthValidator.validateToken, (req: Request, res: Response) => this.productController.createProduct(req, res));
     this.router.get('/external/products', this.externalAuthValidator.validateToken, (req: Request, res: Response) => this.productController.findAllProducts(req, res));
+    this.router.get('/external/product/:id', this.externalAuthValidator.validateToken, (req: Request, res: Response) => this.productController.findProductByid(req, res));
 
     // Adiciona verificação JWT para as rotas abaixo
     this.router.use(this.authMiddleware.getMiddleware());
@@ -37,6 +38,7 @@ class MyRouter {
     // Rotas para uso da aplicação frontend
     this.router.post('/product', (req: Request, res: Response) => this.productController.createProduct(req, res));
     this.router.get('/products', (req: Request, res: Response) => this.productController.findAllProducts(req, res));
+    this.router.get('/product/:id', (req: Request, res: Response) => this.productController.findProductByid(req, res));
     this.router.patch('/product', (req: Request, res: Response) => this.productController.updateProduct(req, res));
     this.router.delete('/product', (req: Request, res: Response) => this.productController.deleteProduct(req, res));
     this.router.post('/product/variant', (req: Request, res: Response) => this.productController.createVariant(req, res));

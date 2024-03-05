@@ -97,6 +97,11 @@ export class ProductController {
     return res.status(code).json(responseData);
   }
 
+  public async findProductByid(req: Request, res: Response) {
+    const { code, ...responseData } = await this.productService.findProductById(req.params['id']);
+    return res.status(code).json(responseData);
+  }
+
   public async updateProduct(req: Request, res: Response) {
     const productData: ProductDTO1 = req.body;
 
