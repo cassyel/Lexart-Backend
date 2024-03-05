@@ -46,4 +46,4 @@ export default async function createServer(): Promise<Express> {
   return app.getExpressApp();
 }
 
-createServer();
+// createServer();
