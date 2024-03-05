@@ -1,6 +1,7 @@
 import { Exclude, Expose } from 'class-transformer';
 import Joi from 'joi';
 
+@Exclude()
 export class Details {
   @Expose()
     brand!: string;
@@ -10,6 +11,12 @@ export class Details {
 
   @Expose()
     color!: string;
+
+  constructor(brand: string, model: string, color: string) {
+    this.brand = brand;
+    this.model = model;
+    this.color = color;
+  }
 }
 
 // Estrutura 1 DTO
@@ -29,6 +36,14 @@ export class ProductDTO1 {
 
   @Expose()
     color!: string;
+
+  constructor(name: string, brand: string, model: string, price: number, color: string) {
+    this.name = name;
+    this.brand = brand;
+    this.model = model;
+    this.price = price;
+    this.color = color;
+  }
 }
 
 // Estrutura 2 DTO
@@ -42,6 +57,12 @@ export class ProductDTO2 {
 
   @Expose()
     price!: number;
+
+  constructor(name: string, details: Details, price: number) {
+    this.name = name;
+    this.details = details;
+    this.price = price;
+  }
 }
 
 // Estrutura 3 DTO
@@ -51,6 +72,11 @@ export class ProductData {
 
   @Expose()
     color!: string;
+
+  constructor(price: number, color: string) {
+    this.price = price;
+    this.color = color;
+  }
 }
 
 @Exclude()
@@ -66,8 +92,14 @@ export class ProductDTO3 {
 
   @Expose()
     data!: ProductData[];
-}
 
+  constructor(name: string, brand: string, model: string, data: ProductData[]) {
+    this.name = name;
+    this.brand = brand;
+    this.model = model;
+    this.data = data;
+  }
+}
 const productDataSchema = Joi.object({
   price: Joi.number().required().messages({ 'any.required': 'O campo "price" é obrigatório' }),
   color: Joi.string().required().messages({ 'any.required': 'O campo "color" é obrigatório' }),

@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto';
 
 interface VariantAttributes {
   id: string;
-  phoneId: number;
+  phoneId: string;
   price: number;
   color: string;
 }
@@ -14,7 +14,7 @@ interface VariantCreationAttributes extends Optional<VariantAttributes, 'id'> {}
 
 class Variant extends Model<VariantAttributes, VariantCreationAttributes> implements VariantAttributes {
   public id!: string;
-  public phoneId!: number;
+  public phoneId!: string;
   public price!: number;
   public color!: string;
 }

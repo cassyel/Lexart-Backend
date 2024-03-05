@@ -10,8 +10,9 @@ export class RegisterController {
 
     const { error } = registerJoiSchema.validate(newUserData);
 
-    if (error)
+    if (error) {
       return res.status(400).json({ errorMessage: error.details[0].message, success: false });
+    }
 
     const { code, ...responseData } = await this.registerService.registerService(newUserData);
     return res.status(code).json(responseData);

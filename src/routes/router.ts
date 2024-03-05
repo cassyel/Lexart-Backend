@@ -2,7 +2,7 @@ import { LoginController } from './../controllers/login/index';
 import { Router, Request, Response } from 'express';
 import { RegisterController } from '../controllers/register';
 import AuthMiddleware from '../middlewares/authMiddleware';
-import { ProductController } from '../controllers/product';
+import { ProductController } from '../controllers/product/create';
 
 class MyRouter {
   private router: Router = Router();
