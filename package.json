@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "build": "tsc",
-    "build-vercel": "yarn install && node ./dist/server.js"
+    "build-vercel": "npm install && npm run build && npm run dev"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
