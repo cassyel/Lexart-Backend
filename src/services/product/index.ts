@@ -1,6 +1,6 @@
 import { ProductDTO1, ProductDTO2, ProductDTO3, VariantDTO } from '../../controllers/product/dto/newProduct.dto';
-import { NewProductResponse } from '../../controllers/product/dto/newProduct.response';
-import { NewVariantResponse } from '../../controllers/product/dto/newVariant.response';
+import { ProductResponse } from '../../controllers/product/dto/newProduct.response';
+import { VariantResponse } from '../../controllers/product/dto/newVariant.response';
 import Phone from '../../models/Phone';
 import Variant from '../../models/Variant';
 
@@ -52,7 +52,7 @@ export class ProductService {
   }
 
   async createProduct(productData: ProductDTO1 | ProductDTO2 | ProductDTO3[]) {
-    const response = new NewProductResponse();
+    const response = new ProductResponse();
 
     try {
       if (Array.isArray(productData)) {
@@ -74,9 +74,65 @@ export class ProductService {
     return response;
   }
 
+  async updateProduct(productData: Partial<ProductDTO1>) {
+    const { name, model, brand, id } = productData;
+    const response = new ProductResponse();
+
+    try {
+      const phone = await Phone.findOne({ where: { id } });
+
+      if (phone) {
+        await Phone.update({ name, model, brand }, { where: { id } });
+
+        response.code = 200;
+        response.success = true;
+      } else {
+        response.code = 404;
+        response.success = false;
+        response.errorMessage = 'Produto não encontrado';
+      }
+
+    } catch (error) {
+      console.error(error);
+
+      response.code = 500;
+      response.success = false;
+      response.errorMessage = 'Erro ao atualizar produto';
+    }
+
+  }
+
+  async deleteProduct(productData: Partial<ProductDTO1>) {
+    const { id } = productData;
+    const response = new VariantResponse();
+
+    try {
+      const phone = await Phone.findOne({ where: { id } });
+
+      if (phone) {
+        await Phone.destroy({ where: { id } });
+
+        response.code = 200;
+        response.success = true;
+      } else {
+        response.code = 404;
+        response.success = false;
+        response.errorMessage = 'Produto não encontrado';
+      }
+    } catch (error) {
+      console.error(error);
+
+      response.code = 500;
+      response.success = false;
+      response.errorMessage = 'Erro ao deletar produto';
+    }
+
+    return response;
+  }
+
   async createVariant(variantDate: VariantDTO) {
     const { color, phoneId, price } = variantDate;
-    const response = new NewVariantResponse();
+    const response = new VariantResponse();
 
     try {
       const phone = await Phone.findOne({ where: { id: phoneId } });
@@ -86,7 +142,7 @@ export class ProductService {
         response.code = 201;
         response.success = true;
       } else {
-        response.code = 400;
+        response.code = 404;
         response.success = false;
         response.errorMessage = 'Produto não encontrado';
       }
@@ -96,6 +152,62 @@ export class ProductService {
       response.code = 400;
       response.success = false;
       response.errorMessage = 'Erro ao criar variante';
+    }
+
+    return response;
+  }
+
+  async deleteVariant(variantData: VariantDTO) {
+    const { id } = variantData;
+    const response = new VariantResponse();
+
+    try {
+      const phone = await Phone.findOne({ where: { id } });
+
+      if (phone) {
+        await Variant.destroy({ where: { id } });
+
+        response.code = 200;
+        response.success = true;
+      } else {
+        response.code = 404;
+        response.success = false;
+        response.errorMessage = 'Produto não encontrado';
+      }
+    } catch (error) {
+      console.error(error);
+
+      response.code = 500;
+      response.success = false;
+      response.errorMessage = 'Erro ao deletar variante';
+    }
+
+    return response;
+  }
+
+  async updateVariant(variantData: VariantDTO) {
+    const { price, id, phoneId } = variantData;
+    const response = new VariantResponse();
+
+    try {
+      const phone = await Phone.findOne({ where: { id: phoneId } });
+
+      if (phone) {
+        await Variant.update({ price }, { where: { id } });
+
+        response.code = 200;
+        response.success = true;
+      } else {
+        response.code = 404;
+        response.success = false;
+        response.errorMessage = 'Produto não encontrado';
+      }
+    } catch (error) {
+      console.error(error);
+
+      response.code = 500;
+      response.success = false;
+      response.errorMessage = 'Erro ao atualizar variante';
     }
 
     return response;

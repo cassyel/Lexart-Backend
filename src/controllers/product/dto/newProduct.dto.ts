@@ -21,6 +21,9 @@ export class Details {
 @Exclude()
 export class ProductDTO1 {
   @Expose()
+    id?: string;
+
+  @Expose()
     name: string;
 
   @Expose()
@@ -100,6 +103,9 @@ export class ProductDTO3 {
 }
 
 export class VariantDTO {
+  @Expose ()
+    id?: string;
+
   @Expose()
     color: string;
 

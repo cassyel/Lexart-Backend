@@ -1,7 +1,7 @@
 import { Expose, Exclude } from 'class-transformer';
 
 @Exclude()
-export class NewVariantResponse {
+export class VariantResponse {
   @Expose()
     success!: boolean;
 
