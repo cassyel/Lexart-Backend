@@ -50,7 +50,7 @@ User.init(
   }
 );
 
-User.sync();
+// User.sync();
 // User.sync({ force: true });
 
 export default User;

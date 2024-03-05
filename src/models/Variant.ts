@@ -48,7 +48,7 @@ Variant.init(
   }
 );
 
-Variant.sync();
+// Variant.sync();
 // Variant.sync({ force: true });
 
 export default Variant;

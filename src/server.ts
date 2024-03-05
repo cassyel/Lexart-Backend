@@ -15,7 +15,7 @@ class App {
   public async setup() {
     try {
       await sequelize.authenticate();
-      await sequelize.sync();
+      // await sequelize.sync();
       console.log('Conexão efetuada');
 
       this.expressApp.use(express.json());
@@ -46,4 +46,4 @@ export default async function createServer(): Promise<Express> {
   return app.getExpressApp();
 }
 
-// createServer();
+createServer();

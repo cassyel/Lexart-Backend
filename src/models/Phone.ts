@@ -55,7 +55,7 @@ Phone.init(
 const VariantModel: ModelStatic<Variant> = Variant as ModelStatic<Variant>;
 Phone.hasMany(VariantModel, { as: 'variants', foreignKey: 'phoneId', onDelete: 'CASCADE' });
 
-Phone.sync();
+// Phone.sync();
 // Phone.sync({ force: true });
 
 export default Phone;
