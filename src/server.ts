@@ -43,5 +43,4 @@ class App {
   }
 }
 
-// Se este arquivo for o módulo principal, execute a aplicação
-require.main === module && new App();
+export default new App();
