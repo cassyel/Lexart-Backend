@@ -79,6 +79,16 @@ export const variantDTOJoiSchema: Joi.ObjectSchema<VariantDTO> = Joi.object({
   'any.required': 'O campo {{#label}} é obrigatório'
 });
 
+export const updateVariantDTOJoiSchema: Joi.ObjectSchema<VariantDTO> = Joi.object({
+  id: Joi.string().uuid().required(),
+  price: Joi.number().required(),
+}).messages({
+  'string.empty': '{{#label}} não pode ser vazio',
+  'number.base': '{{#label}} deve ser um número',
+  'any.required': 'O campo {{#label}} é obrigatório'
+});
+
+
 export const deleteVariantDTOJoiSchema: Joi.ObjectSchema<VariantDTO> = Joi.object({
   id: Joi.string().uuid().required()
 }).messages({

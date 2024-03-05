@@ -193,13 +193,13 @@ export class ProductService {
 
 
   async updateVariant(variantData: VariantDTO) {
-    const { price, id, phoneId } = variantData;
+    const { price, id } = variantData;
     const response = new VariantResponse();
 
     try {
-      const phone = await Phone.findOne({ where: { id: phoneId } });
+      const variant = await Variant.findOne({ where: { id } });
 
-      if (phone) {
+      if (variant) {
         await Variant.update({ price }, { where: { id } });
 
         response.code = 200;

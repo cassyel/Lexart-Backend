@@ -9,6 +9,7 @@ import {
   productDTO2JoiSchema,
   productDTO3JoiSchema,
   updateProductDTOJoiSchema,
+  updateVariantDTOJoiSchema,
   variantDTOJoiSchema,
 } from './joi';
 import Joi from 'joi';
@@ -132,6 +133,21 @@ export class ProductController {
       const variantInstance = this.createVariantInstance(variantData);
       console.log(variantInstance);
       const { code, ...responseData }= await this.productService.createVariant(variantInstance);
+      return res.status(code).json(responseData);
+    }
+  }
+
+  public async updateVariant(req: Request, res: Response) {
+    const variantData: VariantDTO = req.body;
+
+    const { error } = this.validateProduct(variantData, updateVariantDTOJoiSchema);
+
+    if (error) {
+      return res.status(400).json({ errorMessage: error.details[0].message, success: false });
+    } else {
+      const variantInstance = this.createVariantInstance(variantData);
+      console.log(variantInstance);
+      const { code, ...responseData }= await this.productService.updateVariant(variantInstance);
       return res.status(code).json(responseData);
     }
   }

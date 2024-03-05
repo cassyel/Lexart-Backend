@@ -28,6 +28,7 @@ class MyRouter {
     this.router.delete('/product', (req: Request, res: Response) => this.productController.deleteProduct(req, res));
 
     this.router.post('/product/variant', (req: Request, res: Response) => this.productController.createVariant(req, res));
+    this.router.patch('/product/variant', (req: Request, res: Response) => this.productController.updateVariant(req, res));
     this.router.delete('/product/variant', (req: Request, res: Response) => this.productController.deleteVariant(req, res));
   }
 
