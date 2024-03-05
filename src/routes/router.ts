@@ -20,6 +20,7 @@ class MyRouter {
   }
 
   private setupRoutes() {
+    // Rotas para se registrar e logar no frontend
     this.router.post('/register', (req: Request, res: Response) => this.registerController.register(req, res));
     this.router.post('/login', (req: Request, res: Response) => this.loginController.login(req, res));
 
@@ -33,11 +34,11 @@ class MyRouter {
     // Adiciona verificação JWT para as rotas abaixo
     this.router.use(this.authMiddleware.getMiddleware());
 
+    // Rotas para uso da aplicação frontend
     this.router.post('/product', (req: Request, res: Response) => this.productController.createProduct(req, res));
     this.router.get('/products', (req: Request, res: Response) => res.send('ok'));
     this.router.patch('/product', (req: Request, res: Response) => this.productController.updateProduct(req, res));
     this.router.delete('/product', (req: Request, res: Response) => this.productController.deleteProduct(req, res));
-
     this.router.post('/product/variant', (req: Request, res: Response) => this.productController.createVariant(req, res));
     this.router.patch('/product/variant', (req: Request, res: Response) => this.productController.updateVariant(req, res));
     this.router.delete('/product/variant', (req: Request, res: Response) => this.productController.deleteVariant(req, res));
