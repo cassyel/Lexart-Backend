@@ -1,8 +1,16 @@
 import { Details, ProductDTO1, ProductDTO2, ProductDTO3 } from './dto/newProduct.dto';
 import { Request, Response } from 'express';
 import { ProductService } from '../../services/product';
-import { deleteProductDTOJoiSchema, deleteVariantDTOJoiSchema, productDTO1JoiSchema, productDTO2JoiSchema, productDTO3JoiSchema, variantDTOJoiSchema } from './joi';
 import { VariantDTO } from './dto/newVariant.dto';
+import {
+  deleteProductDTOJoiSchema,
+  deleteVariantDTOJoiSchema,
+  productDTO1JoiSchema,
+  productDTO2JoiSchema,
+  productDTO3JoiSchema,
+  updateProductDTOJoiSchema,
+  variantDTOJoiSchema,
+} from './joi';
 import Joi from 'joi';
 
 type optionsDTO = ProductDTO1 | ProductDTO2 | ProductDTO3[]
@@ -24,7 +32,8 @@ export class ProductController {
         item.name,
         item.brand,
         item.model,
-        item.data
+        item.data,
+        item.id
       ));
 
     } else if ('details' in data) {
@@ -34,14 +43,15 @@ export class ProductController {
         data.details.color
       );
 
-      return new ProductDTO2(data.name, details, data.price);
+      return new ProductDTO2(data.name, details, data.price, data.id);
     } else {
       return new ProductDTO1(
         data.name,
         data.brand,
         data.model,
         data.price,
-        data.color
+        data.color,
+        data.id
       );
     }
   }
@@ -81,17 +91,32 @@ export class ProductController {
     }
   }
 
-  public async deleteProduct(req: Request, res: Response) {
-    const productVariant: ProductDTO1 = req.body;
+  public async updateProduct(req: Request, res: Response) {
+    const productData: ProductDTO1 = req.body;
 
-    const { error } = this.validateProduct(productVariant, deleteProductDTOJoiSchema);
+    const { error } = this.validateProduct(productData, updateProductDTOJoiSchema);
 
     if (error) {
       return res.status(400).json({ errorMessage: error.details[0].message, success: false });
     } else {
-      const variantInstance = this.createProductInstance(productVariant);
+      const variantInstance = this.createProductInstance(productData);
       console.log(variantInstance);
-      const { code, ...responseData }= await this.productService.deleteProduct(productVariant);
+      const { code, ...responseData }= await this.productService.updateProduct(productData);
+      return res.status(code).json(responseData);
+    }
+  }
+
+  public async deleteProduct(req: Request, res: Response) {
+    const productData: ProductDTO1 = req.body;
+
+    const { error } = this.validateProduct(productData, deleteProductDTOJoiSchema);
+
+    if (error) {
+      return res.status(400).json({ errorMessage: error.details[0].message, success: false });
+    } else {
+      const variantInstance = this.createProductInstance(productData);
+      console.log(variantInstance);
+      const { code, ...responseData }= await this.productService.deleteProduct(productData);
       return res.status(code).json(responseData);
     }
   }

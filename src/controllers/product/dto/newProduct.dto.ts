@@ -38,18 +38,22 @@ export class ProductDTO1 {
   @Expose()
     color: string;
 
-  constructor(name: string, brand: string, model: string, price: number, color: string) {
+  constructor(name: string, brand: string, model: string, price: number, color: string, id?: string) {
     this.name = name;
     this.brand = brand;
     this.model = model;
     this.price = price;
     this.color = color;
+    this.id = id;
   }
 }
 
 // Estrutura 2 DTO
 @Exclude()
 export class ProductDTO2 {
+  @Expose()
+    id?: string;
+
   @Expose()
     name: string;
 
@@ -59,10 +63,11 @@ export class ProductDTO2 {
   @Expose()
     price: number;
 
-  constructor(name: string, details: Details, price: number) {
+  constructor(name: string, details: Details, price: number, id?: string) {
     this.name = name;
     this.details = details;
     this.price = price;
+    this.id = id;
   }
 }
 
@@ -83,6 +88,9 @@ export class ProductData {
 @Exclude()
 export class ProductDTO3 {
   @Expose()
+    id?: string;
+
+  @Expose()
     name: string;
 
   @Expose()
@@ -94,10 +102,11 @@ export class ProductDTO3 {
   @Expose()
     data: ProductData[];
 
-  constructor(name: string, brand: string, model: string, data: ProductData[]) {
+  constructor(name: string, brand: string, model: string, data: ProductData[], id?: string) {
     this.name = name;
     this.brand = brand;
     this.model = model;
     this.data = data;
+    this.id = id;
   }
 }

@@ -24,6 +24,7 @@ class MyRouter {
     this.router.use(this.authMiddleware.getMiddleware());
 
     this.router.post('/product', (req: Request, res: Response) => this.productController.createProduct(req, res));
+    this.router.patch('/product', (req: Request, res: Response) => this.productController.updateProduct(req, res));
     this.router.delete('/product', (req: Request, res: Response) => this.productController.deleteProduct(req, res));
 
     this.router.post('/product/variant', (req: Request, res: Response) => this.productController.createVariant(req, res));

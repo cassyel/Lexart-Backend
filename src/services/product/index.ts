@@ -100,7 +100,7 @@ export class ProductService {
       response.success = false;
       response.errorMessage = 'Erro ao atualizar produto';
     }
-
+    return response;
   }
 
   async deleteProduct(productData: ProductDTO1) {
