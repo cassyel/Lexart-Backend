@@ -25,4 +25,4 @@ export default async function setupServer() {
 }
 
 // Para iniciar o servidor, basta chamar a função setupServer
-setupServer();
+// setupServer();
