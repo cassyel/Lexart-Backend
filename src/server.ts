@@ -16,7 +16,7 @@ export default async function setupServer() {
     app.use(router);
     app.use(ErrorHandler.handleServerError);
 
-    const port = 3333;
+    const port = 3000;
     app.listen(port, () => console.log(`Server running on port ${port}`));
   } catch (error) {
     console.error('Erro ao conectar com o banco de dados:', error);
