@@ -8,7 +8,7 @@ export default async function setupServer() {
   const app = express();
 
   try {
-    await sequelize.authenticate();
+    sequelize.authenticate();
     console.log('Conexão efetuada');
 
     app.use(express.json());
@@ -25,4 +25,4 @@ export default async function setupServer() {
 }
 
 // Para iniciar o servidor, basta chamar a função setupServer
-// setupServer();
+setupServer();
