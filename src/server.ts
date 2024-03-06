@@ -6,13 +6,19 @@ import router from './routes/router';
 
 async function createServer() {
   const app = express();
+  const corsConfig = {
+    origin: '*',
+    credential: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
+  };
 
   try {
     await sequelize.authenticate();
     console.log('Conexão efetuada');
 
     app.use(express.json());
-    app.use(cors());
+    app.options('', cors(corsConfig));
+    app.use(cors(corsConfig));
     app.use(router);
     app.use(ErrorHandler.handleServerError);
 
@@ -25,5 +31,7 @@ async function createServer() {
     throw error; // Relançando o erro para que o Vercel possa tratar
   }
 }
+
+createServer();
 
 export default createServer;
