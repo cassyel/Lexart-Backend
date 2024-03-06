@@ -14,6 +14,7 @@ class App {
   public async setup() {
     try {
       await sequelize.authenticate();
+      this.expressApp.listen(3000, () => console.log('servidor rodando na porta 3000'));
       // await sequelize.sync();
       console.log('Conexão efetuada');
 
