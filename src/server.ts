@@ -4,11 +4,11 @@ import cors from 'cors';
 import ErrorHandler from './middlewares/errorHandling';
 import router from './routes/router';
 
-export default async function setupServer() {
+async function createServer() {
   const app = express();
 
   try {
-    sequelize.authenticate();
+    await sequelize.authenticate();
     console.log('Conexão efetuada');
 
     app.use(express.json());
@@ -16,13 +16,14 @@ export default async function setupServer() {
     app.use(router);
     app.use(ErrorHandler.handleServerError);
 
-    const port = 3000;
-    app.listen(port, () => console.log(`Server running on port ${port}`));
+    app.listen(3000, () => console.log(`Criando o servidor em: ${new Date()}`));
+
+    return app; // Retornando a instância do servidor
   } catch (error) {
     console.error('Erro ao conectar com o banco de dados:', error);
-    sequelize.close();
+    await sequelize.close(); // Fechando a conexão com o banco de dados em caso de erro
+    throw error; // Relançando o erro para que o Vercel possa tratar
   }
 }
 
-// Para iniciar o servidor, basta chamar a função setupServer
-setupServer();
+export default createServer;
