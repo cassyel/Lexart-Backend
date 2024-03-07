@@ -41,10 +41,10 @@ class MyRouter {
     this.router.get('/products', (req: Request, res: Response) => this.productController.findAllProducts(req, res));
     this.router.get('/product/:id', (req: Request, res: Response) => this.productController.findProductByid(req, res));
     this.router.patch('/product', (req: Request, res: Response) => this.productController.updateProduct(req, res));
-    this.router.delete('/product', (req: Request, res: Response) => this.productController.deleteProduct(req, res));
+    this.router.delete('/product/:id', (req: Request, res: Response) => this.productController.deleteProduct(req, res));
     this.router.post('/product/variant', (req: Request, res: Response) => this.productController.createVariant(req, res));
     this.router.patch('/product/variant', (req: Request, res: Response) => this.productController.updateVariant(req, res));
-    this.router.delete('/product/variant', (req: Request, res: Response) => this.productController.deleteVariant(req, res));
+    this.router.delete('/product/variant/:id', (req: Request, res: Response) => this.productController.deleteVariant(req, res));
   }
 
   getRouter(): Router {

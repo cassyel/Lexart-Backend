@@ -168,15 +168,14 @@ export class ProductService {
     return response;
   }
 
-  async deleteProduct(productData: ProductDTO1) {
-    const { id } = productData;
-    const response = new VariantResponse();
+  async deleteProduct(productId: string) {
+    const response = new ProductResponse();
 
     try {
-      const phone = await Phone.findOne({ where: { id } });
+      const phone = await Phone.findOne({ where: { id: productId } });
 
       if (phone) {
-        await Phone.destroy({ where: { id } });
+        await Phone.destroy({ where: { id: productId } });
 
         response.code = 200;
         response.success = true;
@@ -223,16 +222,15 @@ export class ProductService {
     return response;
   }
 
-  async deleteVariant(variantData: VariantDTO) {
-    const { id } = variantData;
+  async deleteVariant(variantId: string) {
     const response = new VariantResponse();
 
     try {
-      const variant = await Variant.findOne({ where: { id } });
+      const variant = await Variant.findOne({ where: { id: variantId } });
 
       if (variant) {
         const variantCount = await Variant.count({ where: { phoneId: variant.phoneId } });
-        await Variant.destroy({ where: { id } });
+        await Variant.destroy({ where: { id: variantId } });
 
         if (variantCount === 1) {
           await Phone.destroy({ where: { id: variant.phoneId } });

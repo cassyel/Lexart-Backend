@@ -3,8 +3,6 @@ import { Request, Response } from 'express';
 import { ProductService } from '../../services/product';
 import { VariantDTO } from './dto/newVariant.dto';
 import {
-  deleteProductDTOJoiSchema,
-  deleteVariantDTOJoiSchema,
   productDTO1JoiSchema,
   productDTO2JoiSchema,
   productDTO3JoiSchema,
@@ -118,18 +116,12 @@ export class ProductController {
   }
 
   public async deleteProduct(req: Request, res: Response) {
-    const productData: ProductDTO1 = req.body;
+    const productId: string = req.params.id;
 
-    const { error } = this.validateProduct(productData, deleteProductDTOJoiSchema);
 
-    if (error) {
-      return res.status(400).json({ errorMessage: error.details[0].message, success: false });
-    } else {
-      const variantInstance = this.createProductInstance(productData);
-      console.log(variantInstance);
-      const { code, ...responseData }= await this.productService.deleteProduct(productData);
-      return res.status(code).json(responseData);
-    }
+    const { code, ...responseData }= await this.productService.deleteProduct(productId);
+    return res.status(code).json(responseData);
+
   }
 
   public async createVariant(req: Request, res: Response) {
@@ -163,17 +155,10 @@ export class ProductController {
   }
 
   public async deleteVariant(req: Request, res: Response) {
-    const variantData: VariantDTO = req.body;
+    const productId: string = req.params.id;
 
-    const { error } = this.validateProduct(variantData, deleteVariantDTOJoiSchema);
+    const { code, ...responseData }= await this.productService.deleteVariant(productId);
+    return res.status(code).json(responseData);
 
-    if (error) {
-      return res.status(400).json({ errorMessage: error.details[0].message, success: false });
-    } else {
-      const variantInstance = this.createVariantInstance(variantData);
-      console.log(variantInstance);
-      const { code, ...responseData }= await this.productService.deleteVariant(variantInstance);
-      return res.status(code).json(responseData);
-    }
   }
 }
