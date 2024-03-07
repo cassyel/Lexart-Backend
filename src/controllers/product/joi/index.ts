@@ -58,7 +58,6 @@ export const updateProductDTOJoiSchema: Joi.ObjectSchema<Partial<ProductDTO1>> =
   name: Joi.string().optional(),
   brand: Joi.string().optional(),
   model: Joi.string().optional(),
-  price: Joi.number().optional(),
 }).messages({
   'string.empty': '{{#label}} não pode ser vazio',
   'number.base': '{{#label}} deve ser um número',
@@ -77,7 +76,8 @@ export const variantDTOJoiSchema: Joi.ObjectSchema<VariantDTO> = Joi.object({
 
 export const updateVariantDTOJoiSchema: Joi.ObjectSchema<VariantDTO> = Joi.object({
   id: Joi.string().uuid().required(),
-  price: Joi.number().required(),
+  price: Joi.number().optional(),
+  color: Joi.string().optional()
 }).messages({
   'string.empty': '{{#label}} não pode ser vazio',
   'number.base': '{{#label}} deve ser um número',
