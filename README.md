@@ -24,11 +24,11 @@ Bem-vindo à documentação da API Lexart Backend. Esta API foi construída util
 
 ### 3. [POST] /login
 - **Descrição:** Rota para autenticar um usuário.
-
+  
 ### 4. [GET] /external-auth
-- **Descrição:** Gera um token de acesso externo.
+-**Descrição:** Gera um token de acesso externo.
 
-## Rotas Externas (Gere o token [aqui](external-auth) e passe no header "external-auth" para ter acesso aos endpoints externos)
+## Rotas Externas (Gere o token [aqui](#4-get-external-auth) e passe no header "external-auth" para ter acesso aos endpoints externos)
 
 ### 5. [POST] /external/product
 - **Descrição:** Cria um novo produto (requer autenticação externa).
