@@ -26,7 +26,7 @@ class MyRouter {
     this.router.post('/login', (req: Request, res: Response) => this.loginController.login(req, res));
 
     // Rota para gerar token de acesso externo
-    this.router.post('/external-auth', (req: Request, res: Response) => this.externalAuthController.generateToken(req, res));
+    this.router.get('/external-auth', (req: Request, res: Response) => this.externalAuthController.generateToken(req, res));
 
     // Rotas para uso externo (adiciona middleware de validação)
     this.router.post('/external/product', this.externalAuthValidator.validateToken, (req: Request, res: Response) => this.productController.createProduct(req, res));
